@@ -4,7 +4,7 @@ function App() {
   const [serverTime, setServerTime] = useState('현재 시간을 확인해 보세요')
 
   // [중요] 여기에 Backend 배포 후 얻은 URL을 넣습니다.
-  const API_URL = "https://y8uwis0swh.execute-api.ap-northeast-2.amazonaws.com/Prod/time";
+  const API_URL = "https://y8uwis0swh.execute-api.ap-northeast-2.amazonaws.com/Prod/seoultime";
 
   const fetchTime = async () => {
     try {
