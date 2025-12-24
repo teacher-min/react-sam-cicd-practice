@@ -28,18 +28,17 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Deploy to S3
-        env:
-          BUCKET: ${{ secrets.S3_BUCKET_NAME }}
         # --delete 옵션: 로컬에 없는 파일은 S3에서도 삭제 (동기화)
-        run: aws s3 sync ./dist s3://$BUCKET --delete
+        run: aws s3 sync ./dist s3://${{ vars.S3_BUCKET_NAME }} --delete
 
       - name: Print Website URL
+        # 환경 변수로 등록하고 리눅스 변수처럼($변수) 사용해 보기
         env:
-          BUCKET: ${{ secrets.S3_BUCKET_NAME }}
-          REGION: ${{ secrets.AWS_REGION }}
+          BUCKET: ${{ vars.S3_BUCKET_NAME }}
+          REGION: ${{ vars.AWS_REGION }}
         run: |
           echo "배포 완료! 아래 주소로 접속하세요:"
           echo "http://$BUCKET.s3-website.$REGION.amazonaws.com"
